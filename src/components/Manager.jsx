@@ -11,12 +11,12 @@ const Manager = () => {
                 <div className="inputs flex flex-col gap-5 my-8">
                     <div>
                         <label className='font-bold text-lg ' htmlFor="url">URL : </label>
-                        <input id='url' className='bg-neutral-200 border-2 border-white w-full rounded-lg text-neutral-900 p-1 px-3 text-lg' type="url" />
+                        <input id='url' className='ml-1 bg-neutral-200 border-2 border-white w-full rounded-lg text-neutral-900 p-1 px-3 text-lg' type="url" />
                     </div>
                     <div className='flex justify-around gap-5 items-center'>
                         <div>
                             <label className='font-bold text-lg ' htmlFor="username">Username : </label>
-                            <input id='username' className='bg-neutral-200 border-2 border-white rounded-lg text-neutral-900 p-1 px-3 text-lg' type="text" />
+                            <input id='username' className='ml-1 bg-neutral-200 border-2 border-white rounded-lg text-neutral-900 p-1 px-3 text-lg' type="text" />
                         </div>
                         <div>
                             <label className='font-bold text-lg ' htmlFor="password">Password : </label>
@@ -24,6 +24,18 @@ const Manager = () => {
                         </div>
                     </div>
                     <button className='bg-white/10 hover:bg-white/20 border border-white/20  shadow-lg backdrop-blur-md text-neutral-200 transition-all duration-200 mx-auto p-3 rounded-lg font-bold flex justify-center items-center gap-2 cursor-pointer'>Add Password</button>
+                </div>
+                <div className="rows bg-red-600 p-2 flex flex-col gap-5 justify-center items-center">
+                    <h1 className='font-bold text-2xl'>Stored Passwords</h1>
+                    <div className="row flex justify-between items-center bg-pink-900 p-3 rounded-2xl">
+                        <h1>url: eugfewgfouwg</h1>
+                        <h3>username: rihfwi</h3>
+                        <h3>password: rihfwi</h3>
+                        <div className="buttons flex gap-2">
+                            <button className="edit bg-gray-400 p-2 rounded-2xl">Edit</button>
+                            <button className="delete bg-gray-400 p-2 rounded-2xl">Delete</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
