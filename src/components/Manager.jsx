@@ -3,37 +3,98 @@ import React from 'react'
 const Manager = () => {
     return (
         <main className='flex-1 flex justify-center items-center mx-auto'>
-            <div className="container min-w-[70vw] min-h-[70vh] bg-neutral-900/50 backdrop-blur-lg border border-white/10 shadow-white/10 shadow-xl text-neutral-200 py-10 px-10 rounded-2xl flex flex-col">
-                <div className="heading flex flex-col gap-2 justify-center items-center">
-                    <div className="name font-bold text-4xl">Vault</div>
+            <div className=" mt-7 mb-7 w-full max-w-4xl bg-neutral-900/50 backdrop-blur-lg border border-white/10 shadow-2xl shadow-indigo-900/20 text-neutral-200 py-10 px-8 rounded-2xl flex flex-col">
+                <div className="heading flex flex-col gap-`1` justify-center items-center mb-10">
+                    <div className="name font-bold text-4xl text-white tracking-tight">Vault</div>
                     <div className="tagline text-sm text-neutral-400">Your own Password Manager!!</div>
                 </div>
-                <div className="inputs flex flex-col gap-5 my-8">
-                    <div>
-                        <label className='font-bold text-lg ' htmlFor="url">URL : </label>
-                        <input id='url' className='ml-1 bg-neutral-200 border-2 border-white w-full rounded-lg text-neutral-900 p-1 px-3 text-lg' type="url" />
+                <div className="inputs flex flex-col gap-6 w-full max-w-2xl mx-auto mb-12">
+                    <div className='flex flex-col gap-2'>
+                        <label className='font-semibold text-sm text-neutral-300 ml-1 ' htmlFor="url">Website URL</label>
+                        <input placeholder='https://example.com' id='url' className='bg-neutral-950/50 border border-neutral-700 focus:border-red-500 focus:ring-1 focus:ring-red-500 outline-none w-full rounded-xl text-white py-2 px-4 text-lg transition-all duration-200' type="url" />
                     </div>
-                    <div className='flex justify-around gap-5 items-center'>
-                        <div>
-                            <label className='font-bold text-lg ' htmlFor="username">Username : </label>
-                            <input id='username' className='ml-1 bg-neutral-200 border-2 border-white rounded-lg text-neutral-900 p-1 px-3 text-lg' type="text" />
+                    <div className='grid grid-cols-2 gap-6'>
+                        <div className='flex flex-col gap-2'>
+                            <label className='font-semibold text-sm text-neutral-300 ml-1 ' htmlFor="username">Username</label>
+                            <input placeholder='Enter Username' id='username' className='bg-neutral-950/50 border border-neutral-700 focus:border-red-500 focus:ring-1 focus:ring-red-500 outline-none w-full rounded-xl text-white py-2 px-4 text-lg transition-all duration-200' type="text" />
                         </div>
-                        <div>
-                            <label className='font-bold text-lg ' htmlFor="password">Password : </label>
-                            <input id='password' className='bg-neutral-200 border-2 border-white rounded-lg text-neutral-900 p-1 px-3 text-lg' type="text" />
+                        <div className='flex flex-col gap-2'>
+                            <label className='font-semibold text-sm text-neutral-300 ml-1 ' htmlFor="password">Password</label>
+                            <div className='relative w-full'>
+                                <input placeholder='Enter Password' id='password' className='bg-neutral-950/50 border border-neutral-700 focus:border-red-500 focus:ring-1 focus:ring-red-500 outline-none rounded-xl text-white py-2 pl-4 pr-12 text-lg w-full transition-all duration-200' type="password" />
+                                <span className='absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer opacity-70 hover:opacity-100 transition-opacity flex items-center'>
+                                    <lord-icon
+                                        src="https://cdn.lordicon.com/dicvhxpz.json"
+                                        trigger="click"
+                                        stroke="regular"
+                                        colors="primary:#e5e5e5,secondary:#e5e5e5"
+                                        style={{ width: "24px", height: "24px" }}>
+                                    </lord-icon>
+                                </span>
+                            </div>
                         </div>
                     </div>
-                    <button className='bg-white/10 hover:bg-white/20 border border-white/20  shadow-lg backdrop-blur-md text-neutral-200 transition-all duration-200 mx-auto p-3 rounded-lg font-bold flex justify-center items-center gap-2 cursor-pointer'>Add Password</button>
+                    <button className='mt-4 bg-white/10 hover:bg-white/20 border border-white/20  shadow-lg backdrop-blur-md text-white transition-all duration-200 mx-auto py-3 px-8 rounded-full font-bold flex justify-center items-center gap-2 cursor-pointer w-fit'>
+                        <lord-icon
+                            src="https://cdn.lordicon.com/efxgwrkc.json"
+                            trigger="hover"
+                            colors="primary:#e5e5e5"
+                            style={{ width: "24px", height: "24px" }}>
+                        </lord-icon>
+                        Add Password
+                    </button>
                 </div>
-                <div className="rows bg-red-600 p-2 flex flex-col gap-5 justify-center items-center">
-                    <h1 className='font-bold text-2xl'>Stored Passwords</h1>
-                    <div className="row flex justify-between items-center bg-pink-900 p-3 rounded-2xl">
-                        <h1>url: eugfewgfouwg</h1>
-                        <h3>username: rihfwi</h3>
-                        <h3>password: rihfwi</h3>
-                        <div className="buttons flex gap-2">
-                            <button className="edit bg-gray-400 p-2 rounded-2xl">Edit</button>
-                            <button className="delete bg-gray-400 p-2 rounded-2xl">Delete</button>
+
+                <div className='w-full h-[1px] bg-white/10 mb-8'></div>
+
+                <div className="rows flex flex-col w-full max-w-3xl mx-auto">
+                    <h2 className='font-bold text-2xl mb-6 text-white'>Stored Passwords</h2>
+                    <div className="row flex flex-col gap-4">
+                        <div className="group flex justify-between items-center bg-neutral-950/30 hover:bg-neutral-950/50 border border-white/5 hover:border-white/10 transition-all duration-200 p-4 rounded-xl gap-4" >
+                            <div className="grid grid-cols-3 gap-4 w-full">
+                                <div className="webs">
+                                    <span className='text-xs text-neutral-500 block mb-1'>URL</span>
+                                    <span className='text-white'>abdiegrf.com</span>
+                                </div>
+                                <div className="webs">
+                                    <span className='text-xs text-neutral-500 block mb-1'>Username</span>
+                                    <span className='text-white'>wi0rfh</span>
+                                </div>
+                                <div className="webs">
+                                    <span className='text-xs text-neutral-500 block mb-1'>Password</span>
+                                    <div className='flex items-center gap-2'>
+                                        <span className='text-white tracking-widest'>••••••••</span>
+                                        <span className='cursor-pointer opacity-70 hover:opacity-100 transition-opacity flex items-center'>
+                                            <lord-icon
+                                                src="https://cdn.lordicon.com/dicvhxpz.json"
+                                                trigger="click"
+                                                stroke="regular"
+                                                colors="primary:#e5e5e5,secondary:#e5e5e5"
+                                                style={{ width: "24px", height: "24px" }}>
+                                            </lord-icon>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="buttons flex gap-3 justify-end items-center">
+                                <button >
+                                    <lord-icon
+                                        src="https://cdn.lordicon.com/exymduqj.json"
+                                        trigger="hover"
+                                        stroke="bold"
+                                        colors="primary:#e5e5e5,secondary:#e5e5e5"
+                                        style={{ width: "24px", height: "24px" }}>
+                                    </lord-icon>
+                                </button>
+                                <button className='text-sm font-semibold text-neutral-400 hover:text-red-500 transition-colors'>
+                                    <lord-icon
+                                        src="https://cdn.lordicon.com/xyfswyxf.json"
+                                        trigger="hover"
+                                        colors="primary:#e5e5e5"
+                                        style={{ width: "24px", height: "24px" }}>
+                                    </lord-icon>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -43,4 +104,3 @@ const Manager = () => {
 }
 
 export default Manager
-// bg-neutral-950/50 hover:bg-neutral-800/50 backdrop-blur-md border-neutral-500 text-white transition-all duration-200 
