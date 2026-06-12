@@ -1,4 +1,6 @@
 import React, { useState,useRef, useEffect } from 'react'
+import Card from './Card.jsx'
+import {v4 as uuidv4} from "uuid"
 
 const Manager = () => {
     const [visible, setVisible] = useState("password")
@@ -15,6 +17,7 @@ const Manager = () => {
     }
     const savePass = ()=>{
         const data = {
+            id: uuidv4(),
             url: url.current.value,
             username: username.current.value,
             password: password.current.value
@@ -24,6 +27,18 @@ const Manager = () => {
         username.current.value = ""
         password.current.value = ""
         alert("Password Saved")
+    }
+    const deletePass = (id)=>{
+        setPasswords(passwords.filter(item=>item.id!==id))
+    }
+    const editPass = (id)=>{
+        const pass = passwords.find(item=>item.id===id)
+        url.current.value = pass.url
+        username.current.value = pass.username
+        password.current.value = pass.password
+
+        url.current.focus();
+        deletePass(id)
     }
     return (
         <main className='flex-1 flex justify-center items-center mx-auto'>
@@ -73,54 +88,10 @@ const Manager = () => {
 
                 <div className="rows flex flex-col w-full max-w-3xl mx-auto">
                     <h2 className='font-bold text-2xl mb-6 text-white'>Stored Passwords</h2>
-                    <div className="row flex flex-col gap-4">
-                        <div className="group flex justify-between items-center bg-neutral-950/30 hover:bg-neutral-950/50 border border-white/5 hover:border-white/10 transition-all duration-200 p-4 rounded-xl gap-4" >
-                            <div className="grid grid-cols-3 gap-4 w-full">
-                                <div className="webs">
-                                    <span className='text-xs text-neutral-500 block mb-1'>URL</span>
-                                    <span className='text-white'>abdiegrf.com</span>
-                                </div>
-                                <div className="webs">
-                                    <span className='text-xs text-neutral-500 block mb-1'>Username</span>
-                                    <span className='text-white'>wi0rfh</span>
-                                </div>
-                                <div className="webs">
-                                    <span className='text-xs text-neutral-500 block mb-1'>Password</span>
-                                    <div className='flex items-center gap-2'>
-                                        <span className='text-white tracking-widest'>••••••••</span>
-                                        <span className='cursor-pointer opacity-70 hover:opacity-100 transition-opacity flex items-center'>
-                                            <lord-icon
-                                                src="https://cdn.lordicon.com/dicvhxpz.json"
-                                                trigger="click"
-                                                stroke="regular"
-                                                colors="primary:#e5e5e5,secondary:#e5e5e5"
-                                                style={{ width: "24px", height: "24px" }}>
-                                            </lord-icon>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="buttons flex gap-3 justify-end items-center">
-                                <button >
-                                    <lord-icon
-                                        src="https://cdn.lordicon.com/exymduqj.json"
-                                        trigger="hover"
-                                        stroke="bold"
-                                        colors="primary:#e5e5e5,secondary:#e5e5e5"
-                                        style={{ width: "24px", height: "24px" }}>
-                                    </lord-icon>
-                                </button>
-                                <button className='text-sm font-semibold text-neutral-400 hover:text-red-500 transition-colors'>
-                                    <lord-icon
-                                        src="https://cdn.lordicon.com/xyfswyxf.json"
-                                        trigger="hover"
-                                        colors="primary:#e5e5e5"
-                                        style={{ width: "24px", height: "24px" }}>
-                                    </lord-icon>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                    {passwords.length===0 && <div>No Passwords Stored yet!</div>}
+                    {passwords.length!==0 && passwords.map(item=>{
+                        return <Card key={item.id} item = {item} deletePass={deletePass} editPass={editPass} />
+                    })}
                 </div>
             </div>
         </main>
