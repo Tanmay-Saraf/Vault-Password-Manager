@@ -6,11 +6,12 @@ import { toast, ToastContainer } from 'react-toastify'
 const Manager = () => {
     const [visible, setVisible] = useState("password")
     const [passwords, setPasswords] = useState(JSON.parse(localStorage.getItem('storage')) || [])
+    const [editing, setEditing] = useState()
     useEffect(() => {
         localStorage.setItem('storage', JSON.stringify(passwords))
     }, [passwords])
-    const [search,setSearch] = useState("")
-    let filtered = passwords.filter(item => item.url.toLowerCase().includes(search.toLowerCase())||item.username.toLowerCase().includes(search.toLowerCase()))
+    const [search, setSearch] = useState("")
+    let filtered = passwords.filter(item => item.url.toLowerCase().includes(search.toLowerCase()) || item.username.toLowerCase().includes(search.toLowerCase()))
     const username = useRef()
     const url = useRef()
     const password = useRef()
@@ -18,34 +19,48 @@ const Manager = () => {
         visible === "text" ? setVisible("password") : setVisible("text")
     }
     const savePass = () => {
-        if (!url.current.value ||!username.current.value ||!password.current.value){
+        if (!url.current.value || !username.current.value || !password.current.value) {
             toast.error("All fields are required!");
             return;
         }
-        const data = {
-            id: uuidv4(),
-            url: url.current.value,
-            username: username.current.value,
-            password: password.current.value
+        if (editing) {
+            setPasswords(
+                passwords.map(item => item.id === editing ? {
+                    ...item,
+                    url: url.current.value,
+                    username: username.current.value,
+                    password: password.current.value
+                } : item
+                )
+            );
+            setEditing();
+            toast.success('Password Updated!!')
+        } else {
+            const data = {
+                id: uuidv4(),
+                url: url.current.value,
+                username: username.current.value,
+                password: password.current.value
+            }
+            setPasswords([...passwords, data])
+            toast("Password Saved!!!!")
         }
-        setPasswords([...passwords, data])
         url.current.value = ""
         username.current.value = ""
         password.current.value = ""
-        toast("Password Saved!!!!")
     }
     const deletePass = (id) => {
         setPasswords(passwords.filter(item => item.id !== id))
         toast.error('Password deleted!')
     }
     const editPass = (id) => {
+        setEditing(id)
         const pass = passwords.find(item => item.id === id)
         url.current.value = pass.url
         username.current.value = pass.username
         password.current.value = pass.password
 
         url.current.focus();
-        setPasswords(passwords.filter(item=>item.id!==id))
         toast.info('Password ready to update!')
     }
     return (
@@ -64,7 +79,7 @@ const Manager = () => {
                     <div className="name font-bold text-4xl text-white tracking-tight">Vau<span className='text-red-500'>lt</span></div>
                     <div className="tagline text-sm text-neutral-400">Your own Password Manager!!</div>
                 </div>
-                <div onKeyDown={(e)=>{if(e.key==='Enter'){savePass()}}} className="inputs flex flex-col gap-6 w-full max-w-2xl mx-auto mb-12">
+                <div onKeyDown={(e) => { if (e.key === 'Enter') { savePass() } }} className="inputs flex flex-col gap-6 w-full max-w-2xl mx-auto mb-12">
                     <div className='flex flex-col gap-2'>
                         <label className='font-semibold text-sm text-neutral-300 ml-1 ' htmlFor="url">Website URL</label>
                         <input ref={url} placeholder='https://example.com' id='url' className='bg-neutral-950/50 border border-neutral-700 focus:border-red-500 focus:ring-1 focus:ring-red-500 outline-none w-full rounded-xl text-white py-2 px-4 text-lg transition-all duration-200' type="url" />
@@ -97,7 +112,7 @@ const Manager = () => {
                             colors="primary:#e5e5e5"
                             style={{ width: "24px", height: "24px" }}>
                         </lord-icon>
-                        Add Password
+                        {editing?'Update Password':'Add Password'}
                     </button>
                 </div>
 
@@ -111,7 +126,7 @@ const Manager = () => {
                         </div>
                         <div className='relative flex justify-center items-center'>
                             <i className="absolute left-2 fa-solid fa-magnifying-glass"></i>
-                            <input value={search} onChange={(e)=>setSearch(e.target.value)} type="text" placeholder='Search by URL/Username' className='bg-neutral-950/50 border border-neutral-700 focus:border-red-500 focus:ring-1 focus:ring-red-500 outline-none w-full rounded-xl text-white py-1 px-10 text-sm transition-all duration-200'/>
+                            <input value={search} onChange={(e) => setSearch(e.target.value)} type="text" placeholder='Search by URL/Username' className='bg-neutral-950/50 border border-neutral-700 focus:border-red-500 focus:ring-1 focus:ring-red-500 outline-none w-full rounded-xl text-white py-1 px-10 text-sm transition-all duration-200' />
                         </div>
                     </div>
                     {passwords.length === 0 && <div>No Passwords Stored yet!</div>}
